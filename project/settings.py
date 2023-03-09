@@ -7,8 +7,13 @@ env.read_env()
 
 db_adress = env("DB_ADRESS")
 db_password = env("DB_PASSWORD")
-secret_key = env("SECRET_KEY")
-debug = env.bool("DEBUG")
+db_port = env("DB_PORT")
+db_name = env("DB_NAME")
+db_user = env("DB_USER")
+secret_key = env("SECRET_KEY", "REPLACE_ME")
+debug = env.bool("DEBUG", False)
+allowed_hosts = env.list("ALLOWED_HOSTS", ["localhost:8000"])
+
 
 
 
@@ -17,9 +22,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'HOST': db_adress,
-        'PORT': '5434',
-        'NAME': 'checkpoint',
-        'USER': 'guard',
+        'PORT': db_port,
+        'NAME': db_name,
+        'USER': db_user,
         'PASSWORD': db_password,
     }
 }
@@ -32,7 +37,7 @@ DEBUG = debug
 
 ROOT_URLCONF = 'project.urls'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = allowed_hosts
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
